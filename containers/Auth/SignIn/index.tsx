@@ -9,7 +9,9 @@ const SignIn = () => {
   const [url, setUrl] = useState("");
 
   useEffect(() => {
-    setUrl(window.location.origin.split("//")[1] + window.location.pathname);
+    if (typeof window !== "undefined") {
+      setUrl(window.location.origin.split("//")[1] + window.location.pathname);
+    }
   }, []);
 
   return (
