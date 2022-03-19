@@ -3,19 +3,24 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./Hero.module.sass";
 
-const Hero = ({ marketCap }: { marketCap: number }): JSX.Element => {
+type HeroProps = {
+  active: number;
+};
+
+const Hero = ({ active }: HeroProps): JSX.Element => {
   return (
     <div className={cn("container", styles.container)}>
       <div className={styles.wrap}>
         <h1 className={cn("h3", styles.title)}>
-          Cryptocurrency market cap today is ${marketCap} Trillion
+          There are about {active?.toLocaleString()} active cryptocurrencies as
+          of today
         </h1>
         <div className={styles.text}>
-          View top cryptocurrency prices live, crypto charts, market cap, and
-          trading volume by creating an account with us.
+          That's why we created an intelligent price notifier so that you did
+          not miss the next bull run
         </div>
-        <Link href="/auth/login">
-          <a className={cn("button", styles.button)}>Get started now</a>
+        <Link href="/prices">
+          <a className={cn("button", styles.button)}>Check Coin Prices</a>
         </Link>
       </div>
       <div className={styles.bg}>

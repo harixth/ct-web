@@ -12,10 +12,9 @@
         background: #18191D
 
 .wrap
-    position: relative
-    z-index: 3
-    max-width: 545px
-    margin-bottom: 143px
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
     +m
         margin-bottom: 8px
 
@@ -35,18 +34,3 @@
         color: $n5
     strong
         font-weight: 600
-
-.bg
-    position: absolute
-    top: 0
-    right: calc(50% - 760px)
-    width: 780px
-    pointer-events: none
-    +d
-        right: calc(50% - 820px)
-    +m
-        position: static
-        width: auto
-        margin: 0 -76px 24px -30px
-    img
-        width: 100%

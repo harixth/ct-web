@@ -1,122 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import cn from "classnames";
 import styles from "./PriceTable.module.sass";
 import Icon from "../../atoms/Icon";
 import Link from "next/link";
+import Image from "next/image";
+import { io } from "socket.io-client";
 //import { AreaChart, Area, ResponsiveContainer } from "recharts";
-
-const items = [
-  {
-    title: "Bitcoin",
-    currency: "BTC",
-    price: "$36,201.34",
-    positiveDay: "+6.04%",
-    negativeWeek: "-1.71%",
-    image: "/images/content/currency/bitcoin.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Ethereum",
-    currency: "ETH",
-    price: "$2,605.95",
-    positiveDay: "+6.04%",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/ethereum.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "EOS",
-    currency: "EOS.IO",
-    price: "$426.32",
-    positiveDay: "+6.04%",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/eos.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Tether",
-    currency: "USDT",
-    price: "$1.00",
-    positiveDay: "+6.04%",
-    negativeWeek: "-1.71%",
-    image: "/images/content/currency/tether.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Cardano",
-    currency: "ADA",
-    price: "$1.86",
-    positiveDay: "+6.04%",
-    negativeWeek: "-1.71%",
-    image: "/images/content/currency/cardano.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Dogecoin",
-    currency: "DOGE",
-    price: "$0.4139",
-    negativeDay: "-0.56",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/dogecoin.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "XRP",
-    currency: "XRP",
-    price: "$1.05",
-    positiveDay: "+6.04%",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/ripple.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Polkadot",
-    currency: "DOT",
-    price: "$27.72",
-    negativeDay: "-0.56",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/polkadot.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "USD Coin",
-    currency: "USDC",
-    price: "$1.00",
-    positiveDay: "+6.04%",
-    positiveWeek: "+0.05%",
-    image: "/images/content/currency/usd-coin.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-  {
-    title: "Uniswap",
-    currency: "UNI",
-    price: "$28.67",
-    positiveDay: "+6.04%",
-    negativeWeek: "-1.71%",
-    image: "/images/content/currency/uniswap.svg",
-    marketcap: "$328,564,656,654",
-    volume: "$328,564,656,654",
-    url: "/exchange",
-  },
-];
 
 const data = [
   {
@@ -178,6 +67,42 @@ const data = [
 ];
 
 const PriceTable = () => {
+  const [items, setItems] = useState([
+    {
+      title: "Bitcoin",
+      currency: "BTC",
+      price: "$36,201.34",
+      positiveDay: "+6.04%",
+      negativeWeek: "-1.71%",
+      image: "/images/content/currency/bitcoin.svg",
+      marketcap: "$328,564,656,654",
+      volume: "$328,564,656,654",
+      url: "/exchange",
+    },
+    {
+      title: "Ethereum",
+      currency: "ETH",
+      price: "$2,605.95",
+      positiveDay: "+6.04%",
+      positiveWeek: "+0.05%",
+      image: "/images/content/currency/ethereum.svg",
+      marketcap: "$328,564,656,654",
+      volume: "$328,564,656,654",
+      url: "/exchange",
+    },
+    {
+      title: "Dogecoin",
+      currency: "DOGE",
+      price: "$0.4139",
+      negativeDay: "-0.56",
+      positiveWeek: "+0.05%",
+      image: "/images/content/currency/dogecoin.svg",
+      marketcap: "$328,564,656,654",
+      volume: "$328,564,656,654",
+      url: "#",
+    },
+  ]);
+
   return (
     <div className={styles.trade}>
       <div className={styles.table}>
@@ -214,7 +139,7 @@ const PriceTable = () => {
             <div className={styles.col}>
               <div className={styles.item}>
                 <div className={styles.icon}>
-                  <img src={x.image} alt="Coin" />
+                  <Image width={32} height={32} src={x.image} alt="Coin" />
                 </div>
                 <div className={styles.details}>
                   <span className={styles.subtitle}>{x.title}</span>

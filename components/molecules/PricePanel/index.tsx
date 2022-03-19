@@ -1,116 +1,83 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { io } from "socket.io-client";
 import cn from "classnames";
 import styles from "./PricePanel.module.sass";
-// import { AreaChart, Area, ResponsiveContainer } from "recharts";
+import { AreaChart, Area, ResponsiveContainer } from "recharts";
 import Link from "next/link";
 import Dropdown from "../../atoms/Dropdown";
+import { SocketContext } from "../../../context/socket";
 
-const navigation = [
-  "Cryptocurrencies",
-  "DeFi",
-  "Innovation",
-  "POS",
-  "NFT",
-  "POW",
-];
+const navigation = ["Cryptocurrencies"];
 
-type Currency = {
-  title: string;
-  price: string;
-  currency: string;
-  positive: string;
-  negative?: string;
-  image: string;
-  url: string;
-};
-
-const currency: Currency[] = [
-  {
-    title: "BTC/USDT",
-    price: "36,641.20",
-    currency: "36,641.20",
-    positive: "+0.79%",
-    image: "/images/content/currency/bitcoin.svg",
-    url: "/exchange",
-  },
-  {
-    title: "ETH/USDT",
-    price: "36,641.20",
-    currency: "36,641.20",
-    positive: "+2.96%",
-    image: "/images/content/currency/ethereum.svg",
-    url: "/exchange",
-  },
-  {
-    title: "ATC/USDT",
-    price: "41.20",
-    currency: "41.20",
-    positive: "+0.79%",
-    image: "/images/content/currency/maid.svg",
-    url: "/exchange",
-  },
-];
-
-const data = [
+const chart = [
   {
     name: "1",
-    price: 1000,
+    price: 0,
   },
   {
     name: "2",
-    price: 2300,
+    price: 0,
   },
   {
     name: "3",
-    price: 2000,
+    price: 0,
   },
   {
     name: "4",
-    price: 2780,
+    price: 0,
   },
   {
     name: "5",
-    price: 1890,
+    price: 0,
   },
   {
     name: "6",
-    price: 2390,
-  },
-  {
-    name: "7",
-    price: 2490,
-  },
-  {
-    name: "8",
-    price: 3000,
-  },
-  {
-    name: "9",
-    price: 2500,
-  },
-  {
-    name: "10",
-    price: 2000,
-  },
-  {
-    name: "11",
-    price: 2780,
-  },
-  {
-    name: "12",
-    price: 1890,
-  },
-  {
-    name: "13",
-    price: 2390,
-  },
-  {
-    name: "14",
-    price: 1490,
+    price: 0,
   },
 ];
 
+const initial = {
+  currency: "$",
+  value: "0",
+  change: 0.0,
+  previous: "0",
+  chartData: chart,
+};
+
 const PricePanel = () => {
+  const socket = useContext(SocketContext);
+  const [BTC, setBTC] = useState(initial);
+  const [ETH, setETH] = useState(initial);
+  const [DOGE, setDOGE] = useState(initial);
+
+  useEffect(() => {
+    socket.on("BTCUSD_PRICE_UPDATED", (price) => {
+      const { chartData } = BTC;
+      const name = chartData[0].name;
+      chartData.shift();
+      chartData?.push({ name, price: Number(price.value?.replace(",", "")) });
+      console.log(chartData);
+      setBTC({ ...price, chartData });
+    });
+
+    socket.on("ETHUSD_PRICE_UPDATED", (price) => {
+      const { chartData } = ETH;
+      const name = chartData[0].name;
+      chartData.shift();
+      chartData?.push({ name, price: Number(price.value?.replace(",", "")) });
+      console.log(chartData);
+      setETH({ ...price, chartData });
+    });
+
+    socket.on("DOGEUSD_PRICE_UPDATED", (price) => {
+      const { chartData } = DOGE;
+      const name = chartData[0].name;
+      chartData.shift();
+      chartData?.push({ name, price: Number(price.value?.replace(",", "")) });
+      console.log(chartData);
+      setDOGE({ ...price, chartData });
+    });
+  }, [socket]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [sorting, setSorting] = useState(navigation[0]);
 
@@ -118,7 +85,38 @@ const PricePanel = () => {
     <div className={styles.panel}>
       <div className={styles.body}>
         <div className={styles.list}>
-          {currency.map((x, index) => (
+          {[
+            {
+              title: "BTCUSD",
+              value: `${BTC.value}`,
+              currency: `${BTC.currency}`,
+              change: BTC.change,
+              previous: `${BTC.previous}`,
+              chartData: BTC.chartData,
+              image: "/images/content/currency/bitcoin.svg",
+              url: "#",
+            },
+            {
+              title: "ETHUSD",
+              value: `${ETH.value}`,
+              currency: `${ETH.currency}`,
+              change: ETH.change,
+              previous: `${ETH.previous}`,
+              chartData: ETH.chartData,
+              image: "/images/content/currency/ethereum.svg",
+              url: "#",
+            },
+            {
+              title: "DOGEUSD",
+              value: `${DOGE.value}`,
+              currency: `${DOGE.currency}`,
+              change: DOGE.change,
+              previous: `${DOGE.previous}`,
+              chartData: DOGE.chartData,
+              image: "/images/content/currency/dogecoin.svg",
+              url: "#",
+            },
+          ].map((x, index) => (
             <Link key={index} href={x.url}>
               <a className={styles.item}>
                 <div className={styles.icon}>
@@ -127,22 +125,30 @@ const PricePanel = () => {
                 <div className={styles.details}>
                   <div className={styles.line}>
                     <div className={styles.title}>{x.title}</div>
-                    {x.positive && (
-                      <div className={styles.positive}>{x.positive}</div>
-                    )}
-                    {x.negative && (
-                      <div className={styles.negative}>{x.negative}</div>
+                    {x.change && (
+                      <div
+                        className={
+                          Math.sign(x.change) === 1
+                            ? styles.positive
+                            : styles.negative
+                        }
+                      >
+                        {x.change === 0 ? "0.00" : x.change.toFixed(2)}
+                      </div>
                     )}
                   </div>
-                  <div className={styles.price}>{x.price}</div>
-                  <div className={styles.currency}>{x.currency}</div>
+                  <div className={styles.price}>
+                    {x.currency}
+                    {x.value}
+                  </div>
+                  <div className={styles.currency}>Last: {x.previous}</div>
                 </div>
-                {/* <div className={styles.chart}>
+                <div className={styles.chart}>
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                       width={500}
                       height={400}
-                      data={data}
+                      data={x.chartData}
                       margin={{
                         top: 0,
                         right: 0,
@@ -179,7 +185,7 @@ const PricePanel = () => {
                       />
                     </AreaChart>
                   </ResponsiveContainer>
-                </div> */}
+                </div>
               </a>
             </Link>
           ))}

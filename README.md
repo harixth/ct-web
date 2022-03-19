@@ -27,7 +27,7 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-As for proudction built, you can use following command:
+As for production built, you can use following command:
 
 ```bash
 # building

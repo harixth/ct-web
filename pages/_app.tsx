@@ -5,14 +5,17 @@ import "../styles/app.sass";
 import type { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
 import client from "../graphql/client";
+import { socket, SocketContext } from "../context/socket";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
       <CookiesProvider>
-        <ApolloProvider client={client}>
-          <Component {...pageProps} />
-        </ApolloProvider>
+        <SocketContext.Provider value={socket}>
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </SocketContext.Provider>
       </CookiesProvider>
     </RecoilRoot>
   );
