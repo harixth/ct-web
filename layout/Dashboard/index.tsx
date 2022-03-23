@@ -21,6 +21,11 @@ const navigation: NavItem[] = [
     url: "/dashboard/overview",
   },
   {
+    title: "Alerts",
+    color: "#11397A",
+    url: "/dashboard/alert",
+  },
+  {
     title: "Profile",
     color: "#16697A",
     url: "/dashboard/profile",
