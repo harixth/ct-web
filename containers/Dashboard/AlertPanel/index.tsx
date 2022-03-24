@@ -3,15 +3,39 @@ import Bidding from "./Bidding";
 import SelectCrypto from "./SelectCrypto";
 import EnterAmount from "./EnterAmount";
 import Confirm from "./Confirm";
+import Image from "next/image";
+import Link from "next/link";
 import Dashboard from "../../../layout/Dashboard";
+import Modal from "../../../components/atoms/Modal";
 
-const steps = ["Select crypto", "Enter amount", "Confirm"];
+const steps = ["Select Crypto", "Enter Amount", "Confirm"];
 
 const SellCrypto = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   return (
     <>
+      <Modal
+        visible={visible}
+        onClose={() => {}}
+        title={"Page is still in construction"}
+      >
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "50vh",
+            textAlign: "center",
+          }}
+        >
+          <Image width={512} height={512} src="/images/404.png" alt="hero" />
+          <Link href="/dashboard/overview">
+            <a onClick={() => setVisible(false)}>Back to Overview</a>
+          </Link>
+        </div>
+      </Modal>
       <Dashboard>
         <Bidding title="Create Alert" items={steps} activeIndex={activeIndex}>
           {activeIndex === 0 && (

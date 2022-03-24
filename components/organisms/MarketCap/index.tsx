@@ -19,7 +19,7 @@ const MarketCap = ({ className, btc, eth, uni, dot }: MarketCapProps) => {
       price: `$${btc?.cap}`,
       money: `Volume: ${btc?.vol}`,
       positive: "+1.19%",
-      image: "images/content/currency/bitcoin.svg",
+      image: "/images/content/currency/bitcoin.svg",
       url: "/",
     },
     {
@@ -27,7 +27,7 @@ const MarketCap = ({ className, btc, eth, uni, dot }: MarketCapProps) => {
       price: `$${eth?.cap}`,
       money: `Volume: ${eth?.vol}`,
       positive: "+0.19%",
-      image: "images/content/currency/ethereum.svg",
+      image: "/images/content/currency/ethereum.svg",
       url: "/",
     },
     {
@@ -35,7 +35,7 @@ const MarketCap = ({ className, btc, eth, uni, dot }: MarketCapProps) => {
       price: `$${uni?.cap}`,
       money: `Volume: ${uni?.vol}`,
       positive: "+2.40%",
-      image: "images/content/currency/uniswap.svg",
+      image: "/images/content/currency/uniswap.svg",
       url: "/",
     },
     {
@@ -43,7 +43,7 @@ const MarketCap = ({ className, btc, eth, uni, dot }: MarketCapProps) => {
       price: `$${dot?.cap}`,
       money: `Volume: ${dot?.vol}`,
       positive: "+2.40%",
-      image: "images/content/currency/polkadot.svg",
+      image: "/images/content/currency/polkadot.svg",
       url: "/",
     },
   ];

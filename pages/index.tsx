@@ -86,28 +86,28 @@ export async function getServerSideProps() {
     },
   };
   try {
-    // const response = await ky(
-    //   "https://pro-api.coinmarketcap.com/v1/cryptocurrency/category?id=605e2967d41eae1066535f70",
-    //   {
-    //     headers: { "X-CMC_PRO_API_KEY": process.env.CMC_PRO_API_KEY },
-    //   }
-    // );
-    // const { data } = await response.json();
-    // marketData = {
-    //   active_cryptocurrencies: 12444,
-    //   total_market_cap: {
-    //     btc: getMarketCap(data.coins, "BTC"),
-    //     eth: getMarketCap(data.coins, "ETH"),
-    //     uni: getMarketCap(data.coins, "UNI"),
-    //     dot: getMarketCap(data.coins, "DOT"),
-    //   },
-    //   total_volume: {
-    //     btc: getVolume(data.coins, "BTC"),
-    //     eth: getVolume(data.coins, "ETH"),
-    //     uni: getVolume(data.coins, "UNI"),
-    //     dot: getVolume(data.coins, "DOT"),
-    //   },
-    // };
+    const response = await ky(
+      "https://pro-api.coinmarketcap.com/v1/cryptocurrency/category?id=605e2967d41eae1066535f70",
+      {
+        headers: { "X-CMC_PRO_API_KEY": process.env.CMC_PRO_API_KEY },
+      }
+    );
+    const { data } = await response.json();
+    marketData = {
+      active_cryptocurrencies: 12444,
+      total_market_cap: {
+        btc: getMarketCap(data.coins, "BTC"),
+        eth: getMarketCap(data.coins, "ETH"),
+        uni: getMarketCap(data.coins, "UNI"),
+        dot: getMarketCap(data.coins, "DOT"),
+      },
+      total_volume: {
+        btc: getVolume(data.coins, "BTC"),
+        eth: getVolume(data.coins, "ETH"),
+        uni: getVolume(data.coins, "UNI"),
+        dot: getVolume(data.coins, "DOT"),
+      },
+    };
     console.log(marketData);
   } catch (err) {
     console.log(err);
