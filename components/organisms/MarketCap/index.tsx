@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import cn from "classnames";
 import Link from "next/link";
 import styles from "./MarketCap.module.sass";
@@ -53,7 +54,7 @@ const MarketCap = ({ className, btc, eth, uni, dot }: MarketCapProps) => {
           <Link key={index} href={x.url}>
             <a className={styles.card}>
               <div className={styles.icon}>
-                <img src={x.image} alt="Currency" />
+                <Image width={40} height={40} src={x.image} alt="Currency" />
               </div>
               <div className={styles.details}>
                 <div className={styles.line}>

@@ -7,6 +7,7 @@ import { authState } from "../../store/auth";
 const Social: NextPage = () => {
   const router = useRouter();
   const [_accessToken, setAccessToken] = useRecoilState(authState);
+  const { isReady, query } = router;
 
   useEffect(() => {
     if (router.isReady) {
@@ -18,7 +19,7 @@ const Social: NextPage = () => {
         Router.push("/");
       }
     }
-  }, [router.isReady]);
+  }, [isReady, query]);
 
   return null;
 };

@@ -16,8 +16,8 @@ const Hero = ({ active }: HeroProps): JSX.Element => {
           of today
         </h1>
         <div className={styles.text}>
-          That's why we created an intelligent price notifier so that you did
-          not miss the next bull run
+          Never missed the next bull run as we created an intelligent price
+          notifier so that you did
         </div>
         <Link href="/prices">
           <a className={cn("button", styles.button)}>Check Coin Prices</a>

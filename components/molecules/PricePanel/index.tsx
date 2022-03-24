@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { io } from "socket.io-client";
+import Image from "next/image";
 import cn from "classnames";
 import styles from "./PricePanel.module.sass";
 import { AreaChart, Area, ResponsiveContainer } from "recharts";
@@ -120,7 +120,7 @@ const PricePanel = () => {
             <Link key={index} href={x.url}>
               <a className={styles.item}>
                 <div className={styles.icon}>
-                  <img src={x.image} alt="Currency" />
+                  <Image width={40} height={40} src={x.image} alt="Currency" />
                 </div>
                 <div className={styles.details}>
                   <div className={styles.line}>
